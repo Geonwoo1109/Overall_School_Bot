@@ -5,106 +5,49 @@ importClass(org.jsoup.Jsoup);
 
 var 전체보기 = "\u200b".repeat(500);
 var NN = "\n\n";
-var KEY=""; //나이스에서 제공
+var KEY=""; //나이스 키
 var bar = ("=").repeat(20);
 
-var update201102 = "최신 업데이트: 2020.11.02\n\n<내용>\n{/수행평가}를 {/숙제}로 변경하였습니다.\n숙제 게시판의 인터페이스가 변경되었습니다.";
-var update201108 = "최신 업데이트: 2020.11.08\n\n<내용>\n•급식봇이 업데이트되었습니다!\n 급식봇은 [/급식], [/주간급식]으로 만나보실 수 있습니다.\n•{/알레르기정보}를 {/알레르기}로 변경하였습니다.";
-var update201109 = "개발자 노트: 2020.11.09\n\n<내용>\n•대부분의 이미지 명령어가 중단되었습니다. 주말에 패치예정입니다.";
-var update201115 = "개발자 노트: 2020.11.15\n\n<내용>\n•신규 기능인 [일해라]와 이미지 명령어 [어서오고], [맛 좀 볼래?]가 업데이트되었습니다. 세 기능 전부 해당 단어 포함시에 작동됩니다.";
-
-var sun = "[일요일] 시간표\n\n없음";
-var mon = "[월요일] 시간표\n\n1교시: 국어A(송원영T)\n2교시: 사회B(조혜련T)\n3교시: 수학(길승호T)\n4교시: 음악(김언민T)\n\n5교시: 한국사(유영조T)\n6교시: 영어B(김민성T)\n7교시: 창체";
-var tue = "[화요일] 시간표\n\n1교시: 가정과학A(박정아T)\n2교시: 수학(길승호T)\n3교시: 과학실험(강신애T)\n4교시: 과학실험(강신애T)\n\n5교시: 한국사(유영조T)\n6교시: 가정과학B(고미선T)\n7교시: 국어C(이소민T)";
-var wed = "[수요일] 시간표\n\n1교시: 수학(길승호T)\n2교시: 영어A(김윤정T)\n3교시: 과학C(조은경T, 화학)\n4교시: 체육(박현석T)\n\n5교시: 과학A(임양택T)\n6교시: 사회C(조혜련T)\n7교시: 영어B(김민성T)";
-var thu = "[목요일] 시간표\n\n1교시: 음악(김언민T)\n2교시: 수학(길승호T)\n3교시: 국어A(송원영T)\n4교시: 과학B(양명상T, 물리)\n\n5교시: 체육(박현석T)\n6교시: 사회A(송윤화T)\n7교시: 한국사(유영조T)";
-var fri = "[금요일] 시간표\n\n1교시: 영어A(김윤정T)\n2교시: 국어B(인혜련T)\n3교시: 진로(조성아T)\n4교시: 음악(김언민T)\n\n5교시: 사회D(윤인철T)\n6교시: 창체\n7교시: 창체";
-var sat = "[토요일] 시간표\n\n없음";
-
-var 숙제 = "(~11.18.수)\n•국어C 이소민T 유전자변형농산물재배확대(GMO) 토론 지문 쪽지시험 - 공부해오기\n\n(~11.19.목)\n•송원영T 독서일지 2, 3번째 출력해오고 책 남은부분 전부 읽어오기\n\n(~11.20.금)\n•진로 성격검사 꼭!가져오기";
+var 일 = "[일요일] 시간표\n\n없음";
+var 월 = "[월요일] 시간표\n\n1교시: 국어A(송원영T)\n2교시: 사회B(조혜련T)\n3교시: 수학(길승호T)\n4교시: 음악(김언민T)\n\n5교시: 한국사(유영조T)\n6교시: 영어B(김민성T)\n7교시: 창체";
+var 화 = "[화요일] 시간표\n\n1교시: 가정과학A(박정아T)\n2교시: 수학(길승호T)\n3교시: 과학실험(강신애T)\n4교시: 과학실험(강신애T)\n\n5교시: 한국사(유영조T)\n6교시: 가정과학B(고미선T)\n7교시: 국어C(이소민T)";
+var 수 = "[수요일] 시간표\n\n1교시: 수학(길승호T)\n2교시: 영어A(김윤정T)\n3교시: 과학C(조은경T, 화학)\n4교시: 체육(박현석T)\n\n5교시: 과학A(임양택T)\n6교시: 사회C(조혜련T)\n7교시: 영어B(김민성T)";
+var 목 = "[목요일] 시간표\n\n1교시: 음악(김언민T)\n2교시: 수학(길승호T)\n3교시: 국어A(송원영T)\n4교시: 과학B(양명상T, 물리)\n\n5교시: 체육(박현석T)\n6교시: 사회A(송윤화T)\n7교시: 한국사(유영조T)";
+var 금 = "[금요일] 시간표\n\n1교시: 영어A(김윤정T)\n2교시: 국어B(인혜련T)\n3교시: 진로(조성아T)\n4교시: 음악(김언민T)\n\n5교시: 사회D(윤인철T)\n6교시: 창체\n7교시: 창체";
+var 토 = "[토요일] 시간표\n\n없음";
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 {
-  
-  let date = new Date()
-  if (msg == "/명령어" || msg == "/help")
-  {
-    replier.reply ("명령어 목록" + g +
-    "\n\n/시간표\n/내일시간표\n/(요일)시간표\nex) /월요일시간표\n\n/숙제\n\n/급식\n/주간급식\n/알레르기\n\n/로그\n\n/업뎃\n\n/큰글씨 [5글자 이내 아무거나]\nex) /큰글씨 김건우\n\n[...]일해라\n[...]어서오고\n[...]맛 좀 볼래?\n사용법) 해당 단어 포함 시 작동");
-  }
-  
-  if (msg == "/숙제")
-  {
-    var m = (date.getMonth() + 1);
-    var d = date.getDate();
-    replier.reply ("[숙제]\n오늘날짜: " + m + "월 "+ d + "일\n\n" +
-    숙제);
-  }
-  
-   if ( msg == "/일요일시간표" || ( msg == "/시간표" && date.getDay() == 0 ) )
-    {
-      replier.reply (해);
-    } 
-    else if (msg == "/월요일시간표" || (msg == "/시간표" && date.getDay() == 1 ) )
-    {
-      replier.reply (mon);
-     }
-     else if (msg == "/화요일시간표" || (msg == "/시간표" && date.getDay() == 2 ) )
-     {
-       replier.reply (tue);
-     }
-     else if (msg == "/수요일시간표" || (msg == "/시간표" && date.getDay() == 3 ) )
-     {
-       replier.reply (wed);
-     }
-     else if (msg == "/목요일시간표" || (msg == "/시간표" && date.getDay() == 4 ) )
-     {
-       replier.reply (thu);
-     }
-     else if (msg == "/금요일시간표" || (msg == "/시간표" && date.getDay() == 5 ) )
-     {
-       replier.reply (fri);
-     }
-     else if (msg == "/토요일시간표" || (msg == "/시간표" && date.getDay() == 6 ) )
-     {
-       replier.reply (sat);
-     }
+  var 시간표 = "";
+  if (msg == (".시간표")) {
+    switch (String(new Date().getDay())) {
+      case "0": 시간표 = 일;
+                break;
+      case "1": 시간표 = 월;
+                break;
+      case "2": 시간표 = 화;
+                break;
+      case "3": 시간표 = 수;
+                break;
+      case "4": 시간표 = 목;
+                break;
+      case "5": 시간표 = 금;
+                break;
+      case "6": 시간표 = 토;
+                break;}
+  } else if (msg.startsWith(".시간표 ")) 시간표 = eval(msg.substr(5));
+  replier.reply(시간표);
      
-     if (msg == "/내일시간표")
-     {
-       if (date.getDay() == 0)
-       {
-         replier.reply (mon);
-       }
-       else if (date.getDay() == 1)
-       {
-         replier.reply (tue);
-       }
-       else if (date.getDay() == 2)
-       {
-         replier.reply (wed);
-       }
-       else if (date.getDay() == 3)
-       {
-         replier.reply (thu);
-       }
-       else if (date.getDay() == 4)
-       {
-         replier.reply (fri);
-       }
-       else if (date.getDay() == 5)
-       {
-         replier.reply (sat);
-       }
-       else if (date.getDay() == 6)
-       {
-         replier.reply (해);
-       }
-       
-     }
+  let date = new Date()
 //여기서부터 급식
   
-
+var main = new Date();
+var Y = String(main.getFullYear());
+var M = String(main.getMonth()+1);
+if (M.length == 1) M = "0" + M;
+var D = String(main.getDate());
+if (D.length == 1) D = "0" + D;
+//replier.reply(Y+M+D);
 var dateset = new Date();
 var year = dateset.getFullYear (); //전체년도YYYY
 var month = (dateset.getMonth() + 1); //달 0~11
@@ -115,8 +58,8 @@ var 시간 = (year+""+month+""+date3);
 var 날짜인듯 = ("♧ "+month+"월 "+date3+"일 급식");
 
 var site1 = 'https://open.neis.go.kr/hub/mealServiceDietInfo?KEY='+KEY+'&Type=json&plndex=1&pSize=100';
-var site_1 = '&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430030&MLSV_MYD=' + newtime;
-var site_2 = '&MLSV_FROM_YMD=' + newtime + '&MLSV_TO_YMD=' +"20211231";
+var site_1 = '&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430030&MLSV_MYD=' + Y+M+D;
+var site_2 = '&MLSV_FROM_YMD=' + Y+M+D + '&MLSV_TO_YMD=' +"20211231";
 var gup = site1 + site_1 + site_2;
 
 var res0 = Jsoup.connect(gup).get().text();
@@ -132,7 +75,9 @@ a.join("\n\n");
 //replier.reply(res0); 기본값
 //replier.reply(시간);
 
-if(msg==('/급식')){
+if(msg==('.급식')){
+  replier.reply(gup);
+  replier.reply(res);
 // replier.reply (newtime);
 //replier.reply (시간);
 try{
@@ -148,7 +93,7 @@ replier.reply(e);
 }
 
 
-if(msg.includes('/주간급식')){
+if(msg.includes('.주간급식')){
 try{
 replier.reply("7일간 나올 급식입니다.\n전체보기를 눌러주세요!"+전체보기+NN+ a.join(NN).replace(/ /g, "\n"));
 } catch(e){ 
@@ -157,7 +102,7 @@ replier.reply("7일간 나올 급식입니다.\n전체보기를 눌러주세요!
   }
 
   
-  if (msg == "/알레르기")
+  if (msg == ".알레르기")
   {
     replier.reply ("1. 난류\n2. 우유\n3. 메밀\n4. 땅콩\n5. 대두\n6. 밀\n7. 고등어\n8. 게\n9. 새우\n10. 돼지고기\n11. 복숭아\n12. 토마토\n13. 아황산류\n14. 호두\n15. 닭고기\n16. 쇠고기\n17. 오징어\n18. 조개류(굴, 전복, 홍합 포함");
   }
