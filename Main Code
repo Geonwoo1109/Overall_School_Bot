@@ -3,10 +3,11 @@ var f = "\0".repeat (500);
 
 importClass(org.jsoup.Jsoup);
 
-var 전체보기 = "\u200b".repeat(500);
-var NN = "\n\n";
+var allsee = "\u200b".repeat(500);
+var nn = "\n\n";
+var n = "\n";
 var KEY=""; //나이스 키
-var bar = ("=").repeat(20);
+var bar = n+("-").repeat(20)+n;
 
 var 일 = "[일요일] 시간표\n\n없음";
 var 월 = "[월요일] 시간표\n\n1교시: 국어A(송원영T)\n2교시: 사회B(조혜련T)\n3교시: 수학(길승호T)\n4교시: 음악(김언민T)\n\n5교시: 한국사(유영조T)\n6교시: 영어B(김민성T)\n7교시: 창체";
@@ -18,6 +19,7 @@ var 토 = "[토요일] 시간표\n\n없음";
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 {
+  try {
   var 시간표 = "";
   if (msg == (".시간표")) {
     switch (String(new Date().getDay())) {
@@ -38,75 +40,44 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
   } else if (msg.startsWith(".시간표 ")) 시간표 = eval(msg.substr(5));
   replier.reply(시간표);
      
-  let date = new Date()
-//여기서부터 급식
-  
+
 var main = new Date();
 var Y = String(main.getFullYear());
 var M = String(main.getMonth()+1);
 if (M.length == 1) M = "0" + M;
 var D = String(main.getDate());
 if (D.length == 1) D = "0" + D;
-//replier.reply(Y+M+D);
-var dateset = new Date();
-var year = dateset.getFullYear (); //전체년도YYYY
-var month = (dateset.getMonth() + 1); //달 0~11
-var date3 = dateset.getDate(); // 일 1~31
-var day = dateset.getDay(); // 요일 0~6
-var 시간 = (year+""+month+""+date3);
+var Mainsite =
+"https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + KEY
++ "&Type=json&plndex=1&pSize=100&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430030&MLSV_MYD="
++ Y+M+D + "&MLSV_FROM_YMD=" + Y+M+D + "&MLSV_TO_YMD=20221231";
 
-var 날짜인듯 = ("♧ "+month+"월 "+date3+"일 급식");
-
-var site1 = 'https://open.neis.go.kr/hub/mealServiceDietInfo?KEY='+KEY+'&Type=json&plndex=1&pSize=100';
-var site_1 = '&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430030&MLSV_MYD=' + Y+M+D;
-var site_2 = '&MLSV_FROM_YMD=' + Y+M+D + '&MLSV_TO_YMD=' +"20211231";
-var gup = site1 + site_1 + site_2;
-
-var res0 = Jsoup.connect(gup).get().text();
-var res = JSON.stringify(JSON.parse(org.jsoup.Jsoup.connect(gup).ignoreContentType(true).ignoreHttpErrors(true).userAgent("Mozilla").get().text()), null, 4);
-var res2 = JSON.parse(res0).mealServiceDietInfo[1].row[0].DDISH_NM.replace(/ /g, "\n");
-
-var a=[];
-for(i=0 ; i<6 ; i++) {
-a.push(JSON.parse(res0).mealServiceDietInfo[1].row[i].MLSV_TO_YMD.substr (6) +"일_급식 "+bar+" "+ JSON.parse(res0).mealServiceDietInfo[1].row[i].DDISH_NM+" "+bar);
+if (msg == ".급식") {
+  var data = JSON.parse(Jsoup.connect(Mainsite).get().text())
+.mealServiceDietInfo[1].row[0];
+  replier.reply(
+  "꧁༺"+data.MLSV_YMD.substr(6)+"일 " +data.MMEAL_SC_NM +"༻꧂"+nn
+  +data.DDISH_NM.replace(/ /g, "\n"));
 }
-a.join("\n\n");
-
-//replier.reply(res0); 기본값
-//replier.reply(시간);
-
-if(msg==('.급식')){
-  replier.reply(gup);
-  replier.reply(res);
-// replier.reply (newtime);
-//replier.reply (시간);
-try{
-if (day == 0 || day == 6) {
-
-  replier.reply("월요일 급식\n"+bar+"\n"+res2+"\n"+bar);
-} else {
-  replier.reply(날짜인듯+"\n"+bar+"\n"+res2+"\n"+bar);
-}
-} catch (e) {
-replier.reply(e);
-}
-}
-
-
-if(msg.includes('.주간급식')){
-try{
-replier.reply("7일간 나올 급식입니다.\n전체보기를 눌러주세요!"+전체보기+NN+ a.join(NN).replace(/ /g, "\n"));
-} catch(e){ 
-  replier.reply(e);
+if (msg == "..급식") {
+  var data_ = JSON.parse(Jsoup.connect(Mainsite).get().text())
+.mealServiceDietInfo[1];
+var a = [];
+  for (i=0; i<6; i++) {
+      a.push(
+      "꧁༺"+data_.row[i].MLSV_YMD.substr(6)+"일 " +data_.row[i].MMEAL_SC_NM+"༻꧂"+nn
+      +data_.row[i].DDISH_NM.replace(/ /g, "\n"));
   }
-  }
-
+  replier.reply(
+  data_.row[0].MLSV_YMD.substr(6)+"~"+data_.row[6].MLSV_YMD.substr(6)+"일 급식"
+  + allsee + nn+n + a.join(nn));
+}
   
   if (msg == ".알레르기")
   {
-    replier.reply ("1. 난류\n2. 우유\n3. 메밀\n4. 땅콩\n5. 대두\n6. 밀\n7. 고등어\n8. 게\n9. 새우\n10. 돼지고기\n11. 복숭아\n12. 토마토\n13. 아황산류\n14. 호두\n15. 닭고기\n16. 쇠고기\n17. 오징어\n18. 조개류(굴, 전복, 홍합 포함");
+    replier.reply ("알레르기 있는 사람들 필독!"+allsee+nn+"1. 난류\n2. 우유\n3. 메밀\n4. 땅콩\n5. 대두\n6. 밀\n7. 고등어\n8. 게\n9. 새우\n10. 돼지고기\n11. 복숭아\n12. 토마토\n13. 아황산류\n14. 호두\n15. 닭고기\n16. 쇠고기\n17. 오징어\n18. 조개류(굴, 전복, 홍합 포함");
   }
 
-
-}
-
+} catch (e) {
+  replier.reply(e);
+}}
