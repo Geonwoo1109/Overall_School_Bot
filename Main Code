@@ -8,6 +8,7 @@ var nn = "\n\n";
 var n = "\n";
 var KEY=""; //나이스 키
 var bar = n+("-").repeat(20)+n;
+var 요일 = ["일","월","화","수","목","금","토"];
 
 var 일 = "[일요일] 시간표\n\n없음";
 var 월 = "[월요일] 시간표\n\n1교시: 국어A(송원영T)\n2교시: 사회B(조혜련T)\n3교시: 수학(길승호T)\n4교시: 음악(김언민T)\n\n5교시: 한국사(유영조T)\n6교시: 영어B(김민성T)\n7교시: 창체";
@@ -37,7 +38,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
                 break;
       case "6": 시간표 = 토;
                 break;}
-  } else if (msg.startsWith(".시간표 ")) 시간표 = eval(msg.substr(5));
+  } else if (msg.startsWith(".시간표 ")) {
+    if (요일.includes(msg.substr(5))) 시간표 = eval(msg.substr(5));
+  }
   replier.reply(시간표);
      
 
