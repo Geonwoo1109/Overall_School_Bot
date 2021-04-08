@@ -5,13 +5,13 @@ importClass(org.jsoup.Jsoup);
 
 const kalingModule = require('kaling').Kakao();
 const Kakao = new kalingModule();
-Kakao.init('3ec83a6de844b575e244d3b3b5af0ad0'); //자스키
-Kakao.login('ckrgksqns333@gmail.com','wlsWkckrgksqns123'); //아디•비번
+Kakao.init(''); //자스키
+Kakao.login('',''); //아디•비번
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
 var n = "\n";
-var KEY="626f330394384c3980b83f0727f7a9de"; //나이스 키
+var KEY=""; //나이스 키
 var bar = n+("-").repeat(20)+n;
 var 요일 = ["일","월","화","수","목","금","토"];
 
