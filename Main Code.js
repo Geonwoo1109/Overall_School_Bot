@@ -43,7 +43,7 @@ Kakao.send(room, {"link_ver" : "4.0",
                     ImgLink: TimeImgLink_3
                  }
                  }, "custom");
-    } else if (msg == ".시간표 1반") {
+    } else if (msg == ".시간표 1반" || msg == ".ㅅ1") {
 Kakao.send(room, {"link_ver" : "4.0",
                   "template_id" : 48199,
                   "template_args" : {
