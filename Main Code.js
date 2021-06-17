@@ -100,7 +100,7 @@ var Mainsite석 =
 + "&Type=json&plndex=1&pSize=100&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430030&MLSV_MYD="
 + Y+M+D + "&MLSV_FROM_YMD=" + Y+M+D + "&MLSV_TO_YMD=20221231&MMEAL_SC_CODE=3";
 
-if (msg == ".급식") {
+if (msg == ".급식" || msg == ".) {
   
   var data = JSON.parse(Jsoup.connect(Mainsite).get().text())
   .mealServiceDietInfo[1].row[0];
