@@ -55,6 +55,7 @@ Kakao.send(room, {"link_ver" : "4.0",
                  }, "custom");
     }
     /*
+    //요일별로 노가다했던 코드
   if (msg == (".시간표")) {
   var k = "";
     
