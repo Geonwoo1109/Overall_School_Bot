@@ -1,3 +1,5 @@
+const scriptName = "SchoolBot";
+
 var g = "\u200d".repeat(500);
 var f = "\0".repeat (500);
 
@@ -27,7 +29,7 @@ const Class_2_3 = "2-3\n교시  월     화     수     목     금\n 1    문C 
 
 
 const TimeImgLink_1 = "/HqMFt78/image.jpg";
-const TimeImgLink_3 = "/rMvMRz4/image.png";
+const TimeImgLink_3 = "/rvxkvYZ/image.png";
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 {
@@ -38,8 +40,8 @@ Kakao.send(room, {"link_ver" : "4.0",
                   "template_id" : 48199,
                   "template_args" : {
                     Timetable: "https://i.ibb.co"+TimeImgLink_3,
-                    SizeX: 450,
-                    SizeY: 450,
+                    SizeX: 800,
+                    SizeY: 637,
                     ImgLink: TimeImgLink_3
                  }
                  }, "custom");
@@ -55,7 +57,6 @@ Kakao.send(room, {"link_ver" : "4.0",
                  }, "custom");
     }
     /*
-    //요일별로 노가다했던 코드
   if (msg == (".시간표")) {
   var k = "";
     
@@ -101,34 +102,69 @@ var Mainsite석 =
 + "&Type=json&plndex=1&pSize=100&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430030&MLSV_MYD="
 + Y+M+D + "&MLSV_FROM_YMD=" + Y+M+D + "&MLSV_TO_YMD=20221231&MMEAL_SC_CODE=3";
 
-if (msg == ".급식" || msg == ".) {
+if (msg == ".급식" || msg == ".ㄱ") {
   
   var data = JSON.parse(Jsoup.connect(Mainsite).get().text())
   .mealServiceDietInfo[1].row[0];
   var data석 = JSON.parse(Jsoup.connect(Mainsite석).get().text())
   .mealServiceDietInfo[1].row[0];
-  var data석_ = null;
+  var data석_ = data석.DDISH_NM.replace(/ /g, "\n");
   
-  if (/*data석.MLSV_YMD == data.MLSV_YMD*/true) data석_ = data석.DDISH_NM.replace(/ /g, "\n");
-
+  //replier.reply(data.MLSV_YMD);
+  
   replier.reply(
-  "꧁༺"+data.MLSV_YMD.substr(6)+"일 " +data.MMEAL_SC_NM +"༻꧂"+nn
+  "꧁༺"+ data.MLSV_YMD.slice(4,6)+"월 "+data.MLSV_YMD.slice(6,8)+"일 "
+  +data.MMEAL_SC_NM +"༻꧂"+nn
   +data.DDISH_NM.replace(/ /g, "\n")+nn
-  +"꧁༺"+data석.MLSV_YMD.substr(6)+"일 " +data석.MMEAL_SC_NM +"༻꧂"+nn
+  +"꧁༺"+data석.MLSV_YMD.slice(4,6)+"월 " +data석.MLSV_YMD.slice(6,8)+"일 " 
+  +data석.MMEAL_SC_NM +"༻꧂"+nn
   +data석_);
 }
-if (msg == "..급식") {
+if (msg == "..급식" || msg == "..ㄱ") {
+  //replier.reply(Mainsite석 + nn+ Mainsite);
+  
   var data_ = JSON.parse(Jsoup.connect(Mainsite).get().text())
 .mealServiceDietInfo[1];
-var a = [];
-  for (i=0; i<6; i++) {
+  var 중식개수 = JSON.parse(Jsoup.connect(Mainsite).get().text())
+  .mealServiceDietInfo[0].head[0].list_total_count;
+  
+  var data_석 = JSON.parse(Jsoup.connect(Mainsite석).get().text())
+.mealServiceDietInfo[1];
+  var 석식개수 = JSON.parse(Jsoup.connect(Mainsite석).get().text())
+  .mealServiceDietInfo[0].head[0].list_total_count;
+
+var a = [], b = [];
+  //중식
+  for (i=0; i<중식개수; i++) {
       a.push(
-      "꧁༺"+data_.row[i].MLSV_YMD.substr(6)+"일 " +data_.row[i].MMEAL_SC_NM+"༻꧂"+nn
-      +data_.row[i].DDISH_NM.replace(/ /g, "\n"));
+        "꧁༺"+data_.row[i].MLSV_YMD.slice(4,6)+"월 "
+        +data_.row[i].MLSV_YMD.slice(6,8)+"일 "
+        +data_.row[i].MMEAL_SC_NM+"༻꧂"+nn
+        +data_.row[i].DDISH_NM.replace(/ /g, "\n")
+      );
   }
-  replier.reply(
-  data_.row[0].MLSV_YMD.substr(6)+"~"+data_.row[6].MLSV_YMD.substr(6)+"일 급식"
-  + allsee + nn+n + a.join(nn));
+  //석식
+  for (i=0; i<석식개수; i++) {
+    b.push(
+      "꧁༺"+data_석.row[i].MLSV_YMD.slice(4,6)+"월"
+      +data_석.row[i].MLSV_YMD.slice(6,8)+"일"
+      +data_석.row[i].MMEAL_SC_NM+"༻꧂"+nn
+      +data_석.row[i].DDISH_NM.replace(/ /g, "\n")
+    );
+  }
+  
+  replier.reply("<중식>"+n+"  => "
+    +data_.row[중식개수-1].MLSV_YMD.slice(4,6)+"월 "
+    +data_.row[중식개수-1].MLSV_YMD.slice(6,8)+"일까지"+allsee +nn
+    +a.join(nn)
+    +nn +nn+"(나이스에 기록된 정보가 없습니다.)");
+    
+  replier.reply("<석식>"+n+"  => "
+    +data_석.row[석식개수-1].MLSV_YMD.slice(4,6)+"월 "
+    +data_석.row[석식개수-1].MLSV_YMD.slice(6,8)+"일까지"+allsee +nn
+    +b.join(nn)
+    +nn +nn+"(나이스에 기록된 정보가 없습니다.)");
+    
 }
   
   if (msg == ".알레르기") {
@@ -169,5 +205,6 @@ var 초 = [];
 }
 
 } catch (e) {
-  replier.reply(e);
+  Api.reload("SchoolBot");
+  replier.reply("다시해주세요" + e + e.lineNumber);
 }}
