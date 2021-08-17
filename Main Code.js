@@ -31,6 +31,10 @@ const Class_2_3 = "2-3\n교시  월     화     수     목     금\n 1    문C 
 const TimeImgLink_1 = "/HqMFt78/image.jpg";
 const TimeImgLink_3 = "/rvxkvYZ/image.png";
 
+const TimeImgLink_1_2 = "/Fq5Z0z4/image.png";
+const TimeImgLink_1_2_m = "/m4FLMJn/image.png";
+
+
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 {
 
@@ -39,10 +43,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 Kakao.send(room, {"link_ver" : "4.0",
                   "template_id" : 48199,
                   "template_args" : {
-                    Timetable: "https://i.ibb.co"+TimeImgLink_3,
+                    Timetable: "https://i.ibb.co"+TimeImgLink_1_2,
                     SizeX: 800,
                     SizeY: 637,
-                    ImgLink: TimeImgLink_3
+                    ImgLink: TimeImgLink_1_2_m
                  }
                  }, "custom");
     } else if (msg == ".시간표 1반" || msg == ".ㅅ1") {
