@@ -47,7 +47,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 {
 
   try {
-    if (msg == ".시간표" || msg == ".ㅅ") {
+    if (msg == ".시간표" || msg == ".ㅅ" || msg == ".t") {
 Kakao.sendLink(room, {"link_ver" : "4.0",
                   "template_id" : 48199,
                   "template_args" : {
