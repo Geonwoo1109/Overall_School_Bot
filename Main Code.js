@@ -5,17 +5,12 @@ var f = "\0".repeat (500);
 
 importClass(org.jsoup.Jsoup);
 
-/*
-const kalingModule = require('kaling').Kakao();
-const Kakao = new kalingModule();
-Kakao.init('3ec83a6de844b575e244d3b3b5af0ad0'); //자스키
-Kakao.login('ckrgksqns333@gmail.com','wlsWkckrgksqns123'); //아디•비번
-*/
-
 const { KakaoLinkClient } = require('kakaolink');
 const Kakao = new KakaoLinkClient('', 'http://developers.kakao.com');
 
 Kakao.login('','');
+
+
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
@@ -47,6 +42,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 {
 
   try {
+    try{
     if (msg == ".시간표" || msg == ".ㅅ" || msg == ".t") {
 Kakao.sendLink(room, {"link_ver" : "4.0",
                   "template_id" : 48199,
@@ -77,6 +73,9 @@ Kakao.sendLink(room, {"link_ver" : "4.0",
                     ImgLink: TimeImgLink_J_3
                  }
                  }, "custom");
+    }
+    } catch(e) {
+      //replier.reply("1")
     }
     /*
   if (msg == (".시간표")) {
@@ -142,8 +141,11 @@ if (msg == ".급식" || msg == ".ㄱ") {
   
   var data = JSON.parse(Jsoup.connect(Mainsite).get().text())
   .mealServiceDietInfo[1].row[0];
-  var data석 = JSON.parse(Jsoup.connect(Mainsite석).get().text())
-  .mealServiceDietInfo[1].row[0];
+  try {
+    var data석 = JSON.parse(Jsoup.connect(Mainsite석).get().text())
+    .mealServiceDietInfo[1].row[0];
+  
+  
   var data석_ = data석.DDISH_NM.replace(/ /g, "\n");
   
   //replier.reply(data.MLSV_YMD);
@@ -155,21 +157,31 @@ if (msg == ".급식" || msg == ".ㄱ") {
   +"꧁༺"+data석.MLSV_YMD.slice(4,6)+"월 " +data석.MLSV_YMD.slice(6,8)+"일 " 
   +data석.MMEAL_SC_NM +"༻꧂"+nn
   +data석_);
+  } catch(e) {
+      replier.reply(
+  "꧁༺"+ data.MLSV_YMD.slice(4,6)+"월 "+data.MLSV_YMD.slice(6,8)+"일 "
+  +data.MMEAL_SC_NM +"༻꧂"+nn
+  +data.DDISH_NM.replace(/ /g, "\n"));
+  }
 } 
 if (msg == "..급식" || msg == "..ㄱ") {
   //replier.reply(Mainsite석 + nn+ Mainsite);
+  
+  var a=[], b=[];
   
   var data_ = JSON.parse(Jsoup.connect(Mainsite).get().text())
 .mealServiceDietInfo[1];
   var 중식개수 = JSON.parse(Jsoup.connect(Mainsite).get().text())
   .mealServiceDietInfo[0].head[0].list_total_count;
   
+  
+  try{
   var data_석 = JSON.parse(Jsoup.connect(Mainsite석).get().text())
 .mealServiceDietInfo[1];
   var 석식개수 = JSON.parse(Jsoup.connect(Mainsite석).get().text())
   .mealServiceDietInfo[0].head[0].list_total_count;
 
-var a = [], b = [];
+//var a = [], b = [];
   //중식
   for (i=0; i<중식개수; i++) {
       a.push(
@@ -179,6 +191,15 @@ var a = [], b = [];
         +data_.row[i].DDISH_NM.replace(/ /g, "\n")
       );
   }
+  
+  
+  replier.reply("<중식>"+n+"  => "
+    +data_.row[중식개수-1].MLSV_YMD.slice(4,6)+"월 "
+    +data_.row[중식개수-1].MLSV_YMD.slice(6,8)+"일까지"+allsee +nn
+    +a.join(nn)
+    +nn +nn+"(나이스에 기록된 정보가 없습니다.)");
+    
+    
   //석식
   for (i=0; i<석식개수; i++) {
     b.push(
@@ -189,11 +210,6 @@ var a = [], b = [];
     );
   }
   
-  replier.reply("<중식>"+n+"  => "
-    +data_.row[중식개수-1].MLSV_YMD.slice(4,6)+"월 "
-    +data_.row[중식개수-1].MLSV_YMD.slice(6,8)+"일까지"+allsee +nn
-    +a.join(nn)
-    +nn +nn+"(나이스에 기록된 정보가 없습니다.)");
     
   replier.reply("<석식>"+n+"  => "
     +data_석.row[석식개수-1].MLSV_YMD.slice(4,6)+"월 "
@@ -202,13 +218,30 @@ var a = [], b = [];
     +nn +nn+"(나이스에 기록된 정보가 없습니다.)");
     
 }
+   catch(e) {
+    
+  for (i=0; i<중식개수; i++) {
+      a.push(
+        "꧁༺"+data_.row[i].MLSV_YMD.slice(4,6)+"월 "
+        +data_.row[i].MLSV_YMD.slice(6,8)+"일 "
+        +data_.row[i].MMEAL_SC_NM+"༻꧂"+nn
+        +data_.row[i].DDISH_NM.replace(/ /g, "\n")
+      );
+  }
   
+  
+  replier.reply("<중식>"+n+"  => "
+    +data_.row[중식개수-1].MLSV_YMD.slice(4,6)+"월 "
+    +data_.row[중식개수-1].MLSV_YMD.slice(6,8)+"일까지"+allsee +nn
+    +a.join(nn)
+    +nn +nn+"(나이스에 기록된 정보가 없습니다.)");
+  }}
 //지족고
 if (msg == "!급식" || msg == "!ㄱ") {
   
   var data = JSON.parse(Jsoup.connect(Mainsite).get().text())
   .mealServiceDietInfo[1].row[0];
-
+a
   
   //replier.reply(data.MLSV_YMD);
   
@@ -288,5 +321,5 @@ var 초 = [];
 
 } catch (e) {
   Api.reload("SchoolBot");
-  replier.reply("다시해주세요" + e + e.lineNumber);
+  replier.reply("다시해주세요\n" + e + e.lineNumber);
 }}
