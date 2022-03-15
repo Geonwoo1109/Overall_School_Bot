@@ -92,10 +92,20 @@ function Bab(msg, replier, Mainsite, Mainsite석) {
     }
 }
 
+function alarm(room, msg, replier, Y, M, D) {
+    
+}
+
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {
 
     //봇 전체 오류
     try {
+
+        //알람
+        if (room == "카톡봇 테스트방" && msg == "알람" && sender == "방장봇") {
+            alarm(room, msg, replier);
+        }
+
         //시간표 오류
         try{
             //대덕고
@@ -143,16 +153,15 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
             replier.reply("일시적인 오류입니다.\n한번 더 해주세요");
         }
 
-        var main = new Date();
-        var Y = String(main.getFullYear());
-        var M = String(main.getMonth()+1);
-        if (M.length == 1) M = "0" + M;
-        var D = String(main.getDate());
-        if (D.length == 1) D = "0" + D;
-
-
         //대덕고
         if (msg == ".ㄱ" || msg == ".급식" || msg == "..ㄱ" || msg == "..급식") {
+            var main = new Date();
+            var Y = String(main.getFullYear());
+            var M = String(main.getMonth()+1);
+            if (M.length == 1) M = "0" + M;
+            var D = String(main.getDate());
+            if (D.length == 1) D = "0" + D;
+
             var Mainsite =
             "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + KEY
             + "&Type=json&plndex=1&pSize=100&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430030&MLSV_MYD="
@@ -168,6 +177,13 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 
         //지족고
         if (msg == "!ㄱ" || msg == "!급식" || msg == "!!ㄱ" || msg == "!!급식") {
+            var main = new Date();
+            var Y = String(main.getFullYear());
+            var M = String(main.getMonth()+1);
+            if (M.length == 1) M = "0" + M;
+            var D = String(main.getDate());
+            if (D.length == 1) D = "0" + D;
+            
             var Mainsite =
             "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + KEY
             + "&Type=json&plndex=1&pSize=100&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430149&MLSV_MYD="
