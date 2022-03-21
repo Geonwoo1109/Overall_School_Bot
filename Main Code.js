@@ -7,7 +7,7 @@ importClass(org.jsoup.Jsoup);
 
 const { KakaoLinkClient } = require('kakaolink');
 const Kakao = new KakaoLinkClient('', 'http://developers.kakao.com');
-Kakao.login('','');
+Kakao.login('@.','');
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
@@ -15,6 +15,17 @@ var n = "\n";
 var KEY=""; //나이스 키
 var bar = n+("-").repeat(20)+n;
 var 요일 = ["일","월","화","수","목","금","토"];
+
+var main, Y, M, D;
+
+function resetDate() {
+    main = new Date();
+    Y = String(main.getFullYear());
+    M = String(main.getMonth()+1);
+    if (M.length == 1) M = "0" + M;
+    D = String(main.getDate());
+    if (D.length == 1) D = "0" + D;
+}
 
 function Bab(msg, replier, Mainsite, Mainsite석) {
     if (msg == ".급식" || msg == ".ㄱ" || msg == "!급식" || msg == "!ㄱ") {
@@ -93,7 +104,17 @@ function Bab(msg, replier, Mainsite, Mainsite석) {
 }
 
 function alarm(room, msg, replier, Y, M, D) {
-    
+    //replier.reply("☆ 아침 자가진단 해주세요 ☆");
+
+    //var 월 = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var now = new Date();
+    //replier.reply(new Date("Mar 24, 2022"))
+    let Dday_1 = Math.floor((now - new Date("Mar 24, 2022")) / 86400000); //3월 모평
+    let Dday_2 = Math.floor((now - new Date("Apr 29, 2022")) / (1000*60*60*24)); //중간고사
+
+    replier.reply(
+        "3월 모평: D" + Dday_1
+        + "\n중간고사: D" + Dday_2);
 }
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {
@@ -102,7 +123,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
     try {
 
         //알람
-        if (room == "카톡봇 테스트방" && msg == "알람" && sender == "방장봇") {
+        if (msg == ".일정" || msg == ".ㅇ") {
             alarm(room, msg, replier);
         }
 
@@ -128,10 +149,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
                     "link_ver" : "4.0",
                     "template_id" : 48199,
                     "template_args" : {
-                        Timetable: "https://i.ibb.co/g969K9M/image.png",
+                        Timetable: "https://i.ibb.co/cwhSJTM/image.png",
                         SizeX: 800,
                         SizeY: 529,
-                        ImgLink: "/fG9bh7V/image.png"
+                        ImgLink: "/qm6MDpj/image.png"
                     }
                 }, "custom");
             }
@@ -155,12 +176,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 
         //대덕고
         if (msg == ".ㄱ" || msg == ".급식" || msg == "..ㄱ" || msg == "..급식") {
-            var main = new Date();
-            var Y = String(main.getFullYear());
-            var M = String(main.getMonth()+1);
-            if (M.length == 1) M = "0" + M;
-            var D = String(main.getDate());
-            if (D.length == 1) D = "0" + D;
+            resetDate();
 
             var Mainsite =
             "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + KEY
@@ -177,12 +193,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 
         //지족고
         if (msg == "!ㄱ" || msg == "!급식" || msg == "!!ㄱ" || msg == "!!급식") {
-            var main = new Date();
-            var Y = String(main.getFullYear());
-            var M = String(main.getMonth()+1);
-            if (M.length == 1) M = "0" + M;
-            var D = String(main.getDate());
-            if (D.length == 1) D = "0" + D;
+            resetDate();
             
             var Mainsite =
             "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=" + KEY
