@@ -7,7 +7,7 @@ importClass(org.jsoup.Jsoup);
 
 const { KakaoLinkClient } = require('kakaolink');
 const Kakao = new KakaoLinkClient('', 'http://developers.kakao.com');
-Kakao.login('@.','');
+Kakao.login('.com','');
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
@@ -103,18 +103,24 @@ function Bab(msg, replier, Mainsite, Mainsite석) {
     }
 }
 
-function alarm(room, msg, replier, Y, M, D) {
-    //replier.reply("☆ 아침 자가진단 해주세요 ☆");
+function alarm() {
 
     //var 월 = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var now = new Date();
-    //replier.reply(new Date("Mar 24, 2022"))
-    let Dday_1 = Math.floor((now - new Date("Mar 24, 2022")) / 86400000); //3월 모평
-    let Dday_2 = Math.floor((now - new Date("Apr 29, 2022")) / (1000*60*60*24)); //중간고사
+    let 모평3월 = "Mar 24, 2022";
+    let 중간고사 = "Apr 29, 2022";
+    let 수능 = "Nov 17, 2022";
 
-    replier.reply(
-        "3월 모평: D" + Dday_1
-        + "\n중간고사: D" + Dday_2);
+    return "☆ 아침 자가진단 해주세요 ☆\n"
+        + "\n3월 모평: " + D_day(모평3월)
+        + "\n중간고사: " + D_day(중간고사)
+        + "\n수능: " + D_day(수능);
+}
+
+function D_day(date) {
+    var temp = Math.floor((new Date() - new Date(date)) / (1000*60*60*24));
+    if (temp == 0) return "D-Day";
+    else if (temp > 0) return "D+"+temp;
+    else return "D"+temp;
 }
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) {
@@ -123,9 +129,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
     try {
 
         //알람
-        if (msg == ".일정" || msg == ".ㅇ") {
-            alarm(room, msg, replier);
-        }
+        if (msg == ".일정" || msg == ".ㅇ") replier.reply(alarm());
+        if (room == "Carpe Diem" && sender == "방장봇" && msg == "오전 7시") replier.reply("2022 대덕고 3학년 2반", alarm());
+        
 
         //시간표 오류
         try{
