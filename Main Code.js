@@ -7,7 +7,7 @@ importClass(org.jsoup.Jsoup);
 
 const { KakaoLinkClient } = require('kakaolink');
 const Kakao = new KakaoLinkClient('', 'http://developers.kakao.com');
-Kakao.login('.com','');
+Kakao.login('@gmail.com','');
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
@@ -106,14 +106,18 @@ function Bab(msg, replier, Mainsite, Mainsite석) {
 function alarm() {
 
     //var 월 = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    let 모평3월 = "Mar 24, 2022";
-    let 중간고사 = "Apr 29, 2022";
-    let 수능 = "Nov 17, 2022";
 
-    return "☆ 아침 자가진단 해주세요 ☆\n"
-        + "\n3월 모평: " + D_day(모평3월)
-        + "\n중간고사: " + D_day(중간고사)
-        + "\n수능: " + D_day(수능);
+    return "☆ 아침 자가진단 해주세요 ☆"
+        + "\n\n[ 시험일정 ]"
+        + "\n4월 모평: " + D_day("Apr 13, 2022")
+        + "\n중간고사: " + D_day("Apr 29, 2022")
+        //+ "\n6월 모평: " + D_day("Jun 9, 2022")
+        //+ "\n기말고사: " + D_day("Jun 30, 2022")
+        //+ "\n7월 모평: " + D_day("Jul 6, 2022")
+        + "\n수능: " + D_day("Nov 17, 2022")
+
+        + "\n\n[ 기타 일정 ]"
+        + "\n여름방학식: " + D_day("Jul 20, 2022");
 }
 
 function D_day(date) {
