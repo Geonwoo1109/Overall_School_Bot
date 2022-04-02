@@ -103,6 +103,20 @@ function Bab(msg, replier, Mainsite, Mainsite석) {
     }
 }
 
+function Send_Timeline(room, Timetable, SizeX, SizeY, ImgLink) {
+    Kakao.sendLink(room, {
+                    "link_ver" : "4.0",
+                    "template_id" : 48199,
+                    "template_args" : {
+                        Timetable: Timetable,
+                        SizeX: SizeX,
+                        SizeY: SizeY,
+                        ImgLink: ImgLink
+                    }
+                }, "custom"
+    );
+}
+
 function alarm() {
 
     //var 월 = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -134,49 +148,29 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
 
         //알람
         if (msg == ".일정" || msg == ".ㅇ") replier.reply(alarm());
-        if (room == "Carpe Diem" && sender == "방장봇" && msg == "오전 7시") replier.reply("2022 대덕고 3학년 2반", alarm());
+        if (room == "Carpe Diem" && sender == "방장봇" && msg == "오전 7시"
+            && new Date().getDay() != 0 && new Date().getDay() != 6) replier.reply("2022 대덕고 3학년 2반", alarm());
         
 
         //시간표 오류
         try{
             //대덕고
-            if (msg == ".시간표" || msg == ".ㅅ") {
-                Kakao.sendLink(room, {
-                    "link_ver" : "4.0",
-                    "template_id" : 48199,
-                    "template_args" : {
-                        Timetable: "https://i.ibb.co/vmp9JNT/image.png",
-                        SizeX: 800,
-                        SizeY: 498,
-                        ImgLink: "/tp50CBq/Comp-1-00000.png"
-                    }
-                }, "custom");
-            }
-
+            if (msg == ".시간표1" || msg == ".ㅅ1") Send_Timeline(room, "https://i.ibb.co/74ts3M7/3-1.png", 800, 425, "/YdZdPf5/3-1.png");
+            
+            if (msg == ".시간표" || msg == ".ㅅ") Send_Timeline(room, "https://i.ibb.co/Vq5yrQ4/3-2.png", 800, 425, "/vzQRGbf/3-2.png");
+            
+            if (msg == ".시간표3" || msg == ".ㅅ3") Send_Timeline(room, "https://i.ibb.co/zXdd4Vm/3-3.png", 800, 425, "/RgLqX0P/3-3.png");
+            
+            if (msg == ".시간표4" || msg == ".ㅅ4") Send_Timeline(room, "https://i.ibb.co/WnBnMTf/3-4.png", 800, 425, "/MB7zWn3/3-4.png");
+            
+            if (msg == ".시간표5" || msg == ".ㅅ5") Send_Timeline(room, "https://i.ibb.co/16ZmTn7/3-5.png", 800, 425, "/ZSyZMZ0/3-5.png");
+            
             //지족고
             if (msg == "!시간표" || msg == "!ㅅ") {
-                Kakao.sendLink(room, {
-                    "link_ver" : "4.0",
-                    "template_id" : 48199,
-                    "template_args" : {
-                        Timetable: "https://i.ibb.co/cwhSJTM/image.png",
-                        SizeX: 800,
-                        SizeY: 529,
-                        ImgLink: "/qm6MDpj/image.png"
-                    }
-                }, "custom");
+                Send_Timeline(room, "https://i.ibb.co/cwhSJTM/image.png", 800, 529, "/qm6MDpj/image.png");
             }
             if (msg == "!반" || msg == "!ㅂ") {
-                Kakao.sendLink(room, {
-                    "link_ver" : "4.0",
-                    "template_id" : 48199,
-                    "template_args" : {
-                        Timetable: "https://i.ibb.co/m05wKVT/image.png",
-                        SizeX: 800,
-                        SizeY: 442,
-                        ImgLink: "/4FwycGC/image.png"
-                    }
-                }, "custom");
+                Send_Timeline(room, "https://i.ibb.co/m05wKVT/image.png", 800, 442, "/4FwycGC/image.png");
             }
 
         } catch(e) {
