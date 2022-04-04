@@ -7,7 +7,7 @@ importClass(org.jsoup.Jsoup);
 
 const { KakaoLinkClient } = require('kakaolink');
 const Kakao = new KakaoLinkClient('', 'http://developers.kakao.com');
-Kakao.login('@gmail.com','');
+Kakao.login('@.com','');
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
@@ -105,24 +105,22 @@ function Bab(msg, replier, Mainsite, Mainsite석) {
 
 function Send_Timeline(room, Timetable, SizeX, SizeY, ImgLink) {
     Kakao.sendLink(room, {
-                    "link_ver" : "4.0",
-                    "template_id" : 48199,
-                    "template_args" : {
-                        Timetable: Timetable,
-                        SizeX: SizeX,
-                        SizeY: SizeY,
-                        ImgLink: ImgLink
-                    }
-                }, "custom"
-    );
+        "link_ver" : "4.0",
+        "template_id" : 48199,
+        "template_args" : {
+            Timetable: Timetable,
+            SizeX: SizeX,
+            SizeY: SizeY,
+            ImgLink: ImgLink
+        }
+    }, "custom");
 }
 
 function alarm() {
 
     //var 월 = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    return "☆ 아침 자가진단 해주세요 ☆"
-        + "\n\n[ 시험일정 ]"
+    return "[ 시험일정 ]"
         + "\n4월 모평: " + D_day("Apr 13, 2022")
         + "\n중간고사: " + D_day("Apr 29, 2022")
         //+ "\n6월 모평: " + D_day("Jun 9, 2022")
@@ -149,21 +147,22 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
         //알람
         if (msg == ".일정" || msg == ".ㅇ") replier.reply(alarm());
         if (room == "Carpe Diem" && sender == "방장봇" && msg == "오전 7시"
-            && new Date().getDay() != 0 && new Date().getDay() != 6) replier.reply("2022 대덕고 3학년 2반", alarm());
-        
+            && new Date().getDay() != 0 && new Date().getDay() != 6) {
+                replier.reply("2022 대덕고 3학년 2반", "☆ 아침 자가진단 해주세요 ☆\n" + alarm());
+        }
 
         //시간표 오류
         try{
             //대덕고
-            if (msg == ".시간표1" || msg == ".ㅅ1") Send_Timeline(room, "https://i.ibb.co/74ts3M7/3-1.png", 800, 425, "/YdZdPf5/3-1.png");
+            if (msg == ".시간표1" || msg == ".ㅅ1") Send_Timeline(room, "https://i.ibb.co/jgwSb6v/3-1.png", 800, 425, "/dpV6brj/3-1.png");
             
-            if (msg == ".시간표" || msg == ".ㅅ") Send_Timeline(room, "https://i.ibb.co/Vq5yrQ4/3-2.png", 800, 425, "/vzQRGbf/3-2.png");
+            if (msg == ".시간표" || msg == ".ㅅ" || msg == ".ㅅ2") Send_Timeline(room, "https://i.ibb.co/bKvCZmk/3-2.png", 800, 425, "/Zz1RFmB/3-2.png");
             
-            if (msg == ".시간표3" || msg == ".ㅅ3") Send_Timeline(room, "https://i.ibb.co/zXdd4Vm/3-3.png", 800, 425, "/RgLqX0P/3-3.png");
+            if (msg == ".시간표3" || msg == ".ㅅ3") Send_Timeline(room, "https://i.ibb.co/KwwLv5G/3-3.png", 800, 425, "/QvBs0H1/3-3.png");
             
-            if (msg == ".시간표4" || msg == ".ㅅ4") Send_Timeline(room, "https://i.ibb.co/WnBnMTf/3-4.png", 800, 425, "/MB7zWn3/3-4.png");
+            if (msg == ".시간표4" || msg == ".ㅅ4") Send_Timeline(room, "https://i.ibb.co/5v7zVbG/3-4.png", 800, 425, "/f9RdtBx/3-4.png");
             
-            if (msg == ".시간표5" || msg == ".ㅅ5") Send_Timeline(room, "https://i.ibb.co/16ZmTn7/3-5.png", 800, 425, "/ZSyZMZ0/3-5.png");
+            if (msg == ".시간표5" || msg == ".ㅅ5") Send_Timeline(room, "https://i.ibb.co/5WLRt8x/3-5.png", 800, 425, "/QHvBMQt/3-5.png");
             
             //지족고
             if (msg == "!시간표" || msg == "!ㅅ") {
