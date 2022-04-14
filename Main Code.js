@@ -7,7 +7,7 @@ importClass(org.jsoup.Jsoup);
 
 const { KakaoLinkClient } = require('kakaolink');
 const Kakao = new KakaoLinkClient('', 'http://developers.kakao.com');
-Kakao.login('@.com','');
+Kakao.login('.com','');
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
@@ -151,18 +151,26 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
                 replier.reply("2022 대덕고 3학년 2반", "☆ 아침 자가진단 해주세요 ☆\n" + alarm());
         }
 
+        //링크
+        if (msg == ".링크" || msg == ".ㄹ") {
+            replier.reply("https://geonwoo1109.github.io/School_Website/");
+        }
+
         //시간표 오류
         try{
             //대덕고
-            if (msg == ".시간표1" || msg == ".ㅅ1") Send_Timeline(room, "https://i.ibb.co/jgwSb6v/3-1.png", 800, 425, "/dpV6brj/3-1.png");
+            if (msg == ".ㅅ1") Send_Timeline(room, "https://i.ibb.co/zPxrH1r/3-1.png", 800, 425, "/vP5DCPG/3-1.png");
+            if (msg == ".ㅅ2" || msg == ".ㅅ") Send_Timeline(room, "https://i.ibb.co/Hh8QjrQ/3-2.png", 800, 425, "/1Z35PwL/3-2.png");
+            if (msg == ".ㅅ3") Send_Timeline(room, "https://i.ibb.co/BjxnDHn/3-3.png", 800, 425, "/x7K0Mr5/3-3.png");
+            if (msg == ".ㅅ4") Send_Timeline(room, "https://i.ibb.co/xMwckmv/3-4.png", 800, 425, "/NsyPqfb/3-4.png");
+            if (msg == ".ㅅ5") Send_Timeline(room, "https://i.ibb.co/0D0TBMX/3-5.png", 800, 425, "/TRC1Wjt/3-5.png");
             
-            if (msg == ".시간표" || msg == ".ㅅ" || msg == ".ㅅ2") Send_Timeline(room, "https://i.ibb.co/bKvCZmk/3-2.png", 800, 425, "/Zz1RFmB/3-2.png");
-            
-            if (msg == ".시간표3" || msg == ".ㅅ3") Send_Timeline(room, "https://i.ibb.co/KwwLv5G/3-3.png", 800, 425, "/QvBs0H1/3-3.png");
-            
-            if (msg == ".시간표4" || msg == ".ㅅ4") Send_Timeline(room, "https://i.ibb.co/5v7zVbG/3-4.png", 800, 425, "/f9RdtBx/3-4.png");
-            
-            if (msg == ".시간표5" || msg == ".ㅅ5") Send_Timeline(room, "https://i.ibb.co/5WLRt8x/3-5.png", 800, 425, "/QHvBMQt/3-5.png");
+            if (msg == ".ㅅ6") Send_Timeline(room, "https://i.ibb.co/PFhb1w2/3-6.png", 800, 425, "/dfR6961/3-6.png");
+            if (msg == ".ㅅ7") Send_Timeline(room, "https://i.ibb.co/wYk0CCw/3-7.png", 800, 425, "/hcX8cS3/3-7.png");
+            if (msg == ".ㅅ8") Send_Timeline(room, "https://i.ibb.co/D11ppfR/3-8.png", 800, 425, "/4PkjhKs/3-8.png");
+            if (msg == ".ㅅ9") Send_Timeline(room, "https://i.ibb.co/ws7cFrD/3-9.png", 800, 425, "/qsk7bTg/3-9.png");
+            if (msg == ".ㅅ10") Send_Timeline(room, "https://i.ibb.co/Vq8TRf4/3-10.png", 800, 425, "/rbvGXBS/3-10.png");
+            if (msg == ".ㅅ11") Send_Timeline(room, "https://i.ibb.co/Dgxs4zd/3-11.png", 800, 425, "/ssKnCd5/3-11.png");
             
             //지족고
             if (msg == "!시간표" || msg == "!ㅅ") {
