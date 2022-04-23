@@ -7,7 +7,7 @@ importClass(org.jsoup.Jsoup);
 
 const { KakaoLinkClient } = require('kakaolink');
 const Kakao = new KakaoLinkClient('', 'http://developers.kakao.com');
-Kakao.login('.com','');
+Kakao.login('@gmail.com','');
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
@@ -30,25 +30,26 @@ function resetDate() {
 function Bab(msg, replier, Mainsite, Mainsite석) {
     if (msg == ".급식" || msg == ".ㄱ" || msg == "!급식" || msg == "!ㄱ") {
   
-        var data = JSON.parse(Jsoup.connect(Mainsite).get().text())
-        .mealServiceDietInfo[1].row[0];
+        var data = JSON.parse(Jsoup.connect(Mainsite).get().text()).mealServiceDietInfo[1].row[0];
     
         try {
             var data석 = JSON.parse(Jsoup.connect(Mainsite석).get().text()).mealServiceDietInfo[1].row[0];
         
-            var data석_ = data석.DDISH_NM.replace(/ /g, "\n");
             replier.reply(
                 "꧁༺"+ data.MLSV_YMD.slice(4,6)+"월 "+data.MLSV_YMD.slice(6,8)+"일 "
-                +data.MMEAL_SC_NM +"༻꧂"+nn
-                +data.DDISH_NM.replace(/ /g, "\n")+nn
+                +data.MMEAL_SC_NM +"༻꧂"+nn //중식or석식
+                +data.DDISH_NM.replace(/\./g,"").replace(/\(([0-9]+)\)/gm,"").replace(/ +/g, "\n")+n //급식내용
+                
                 +"꧁༺"+data석.MLSV_YMD.slice(4,6)+"월 " +data석.MLSV_YMD.slice(6,8)+"일 " 
-                +data석.MMEAL_SC_NM +"༻꧂"+nn
-                +data석_);
+                +data석.MMEAL_SC_NM +"༻꧂"+nn //중식or석식
+                +data석.DDISH_NM.replace(/\./g,"").replace(/\(([0-9]+)\)/gm,"")
+                    .replace(/ +/g, "\n").replace(/\n$/g, "") //급식내용
+            );
         } catch(e) {
             replier.reply(
                 "꧁༺"+ data.MLSV_YMD.slice(4,6)+"월 "+data.MLSV_YMD.slice(6,8)+"일 "
                 +data.MMEAL_SC_NM +"༻꧂"+nn
-                +data.DDISH_NM.replace(/ /g, "\n"));
+                +data.DDISH_NM.replace(/\./g,"").replace(/\(([0-9]+)\)/gm,"").replace(/ +/g, "\n"));
         }
     }
     
@@ -64,7 +65,7 @@ function Bab(msg, replier, Mainsite, Mainsite석) {
                 "꧁༺"+data_.row[i].MLSV_YMD.slice(4,6)+"월 "
                 +data_.row[i].MLSV_YMD.slice(6,8)+"일 "
                 +data_.row[i].MMEAL_SC_NM+"༻꧂"+nn
-                +data_.row[i].DDISH_NM.replace(/ /g, "\n")
+                +data_.row[i].DDISH_NM.replace(/\./g,"").replace(/\(([0-9]+)\)/gm,"").replace(/ +/g, "\n").replace(/\n$/g, "")
             );
         }
         
@@ -85,7 +86,7 @@ function Bab(msg, replier, Mainsite, Mainsite석) {
                     "꧁༺"+data_석.row[i].MLSV_YMD.slice(4,6)+"월"
                     +data_석.row[i].MLSV_YMD.slice(6,8)+"일"
                     +data_석.row[i].MMEAL_SC_NM+"༻꧂"+nn
-                    +data_석.row[i].DDISH_NM.replace(/ /g, "\n")
+                    +data_석.row[i].DDISH_NM.replace(/\./g,"").replace(/\(([0-9]+)\)/gm,"").replace(/ +/g, "\n").replace(/\n$/g, "")
                 );
             }
         
@@ -121,9 +122,9 @@ function alarm() {
     //var 월 = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     return "[ 시험일정 ]"
-        + "\n4월 모평: " + D_day("Apr 13, 2022")
+        //+ "\n4월 모평: " + D_day("Apr 13, 2022")
         + "\n중간고사: " + D_day("Apr 29, 2022")
-        //+ "\n6월 모평: " + D_day("Jun 9, 2022")
+        + "\n6월 모평: " + D_day("Jun 9, 2022")
         //+ "\n기말고사: " + D_day("Jun 30, 2022")
         //+ "\n7월 모평: " + D_day("Jul 6, 2022")
         + "\n수능: " + D_day("Nov 17, 2022")
@@ -148,7 +149,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
         if (msg == ".일정" || msg == ".ㅇ") replier.reply(alarm());
         if (room == "Carpe Diem" && sender == "방장봇" && msg == "오전 7시"
             && new Date().getDay() != 0 && new Date().getDay() != 6) {
-                replier.reply("2022 대덕고 3학년 2반", "☆ 아침 자가진단 해주세요 ☆\n" + alarm());
+                replier.reply("2022 대덕고 3학년 2반", "☆ 아침 자가진단 해주세요 ☆\n\n" + alarm());
         }
 
         //링크
