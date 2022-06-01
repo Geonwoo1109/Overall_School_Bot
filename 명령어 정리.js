@@ -16,7 +16,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
             +"..ㄱ => 이번달 급식입니다."+n
             +".ㅅ | .ㅅ1 | .ㅅ2 ··· => 시간표입니다."+n
             +".ㅇ => 학교 공식 일정입니다."+n
-            +".ㄹ => 대덕고 3학년 웹페이지입니다."+n
+            +".웹 => 대덕고 3학년 웹페이지입니다."+n
+            +".앱 => 대덕고 3학년 School_App입니다. (안드로이드 한정)"+n
 
             +nn
             +"[신기한거]"+n
@@ -39,8 +40,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
             +".ㄱ => 오늘 급식입니다."+n
             +"..ㄱ => 이번달 급식입니다."+n
             +".ㅅ | .ㅅ1 | .ㅅ2 ··· => 시간표입니다."+n
-            +".ㅇ => 학교 공식 일정입니다."
-            +".ㄹ => 대덕고 3학년 웹페이지입니다."+n
+            +".ㅇ => 학교 공식 일정입니다."+n
+            +".웹 => 대덕고 3학년 웹페이지입니다."+n
+            +".앱 => 대덕고 3학년 School_App입니다.(안드로이드 한정)"+n
 
             +nn
             +"[신기한거]"+n
