@@ -7,7 +7,7 @@ importClass(org.jsoup.Jsoup);
 
 const { KakaoLinkClient } = require('kakaolink');
 const Kakao = new KakaoLinkClient('', 'http://developers.kakao.com');
-Kakao.login('@gmail.com','');
+Kakao.login('','');
 
 var allsee = "\u200b".repeat(500);
 var nn = "\n\n";
@@ -123,9 +123,9 @@ function alarm() {
 
     return "[ 시험일정 ]"
         //+ "\n4월 모평: " + D_day("Apr 13, 2022")
-        + "\n중간고사: " + D_day("Apr 29, 2022")
+        //+ "\n중간고사: " + D_day("Apr 29, 2022")
         + "\n6월 모평: " + D_day("Jun 9, 2022")
-        //+ "\n기말고사: " + D_day("Jun 30, 2022")
+        + "\n기말고사: " + D_day("Jun 30, 2022")
         //+ "\n7월 모평: " + D_day("Jul 6, 2022")
         + "\n수능: " + D_day("Nov 17, 2022")
 
@@ -152,10 +152,18 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
                 replier.reply("2022 대덕고 3학년 2반", "☆ 아침 자가진단 해주세요 ☆\n\n" + alarm());
         }
 
-        //링크
-        if (msg == ".링크" || msg == ".ㄹ") {
-            replier.reply("https://geonwoo1109.github.io/School_Website/");
-        }
+        //웹
+        if (msg == ".웹") replier.reply(
+            "<대덕고 3학년 웹페이지>"
+            +n+"https://geonwoo1109.netlify.app/"
+        );
+        //앱
+        if (msg == ".앱") replier.reply(
+            "<대덕고 3학년 School_App>"
+            +n+"https://github.com/Geonwoo1109/School_App/blob/main/README.md"
+            +n+"*안드로이드에서 작동합니다."
+            +n+"*~6.30까지 진행되는 선착순 이벤트가 있습니다. 자세한 내용은 링크 참고 부탁드립니다."
+        );
 
         //시간표 오류
         try{
@@ -175,7 +183,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
             
             //지족고
             if (msg == "!시간표" || msg == "!ㅅ") {
-                Send_Timeline(room, "https://i.ibb.co/cwhSJTM/image.png", 800, 529, "/qm6MDpj/image.png");
+                Send_Timeline(room, "https://i.ibb.co/72kDbvw/image.png", 800, 529, "/72kDbvw/image.png");
             }
             if (msg == "!반" || msg == "!ㅂ") {
                 Send_Timeline(room, "https://i.ibb.co/m05wKVT/image.png", 800, 442, "/4FwycGC/image.png");
